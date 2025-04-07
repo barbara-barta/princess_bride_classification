@@ -19,3 +19,5 @@ The outline of the project is roughly as follows:
 4. performing three different classification algorithms, namely SVM, logistic regression and random forest
 5. choosing the best algorithm and parameters using cross-validation
 
+
+In the future I hope to build a UI such that a user can drop an image and receive the predicted label.
