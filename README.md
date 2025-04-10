@@ -3,12 +3,12 @@ This project is an end-to-end ML pipeline for classifying images of five charact
 
 Is it princess Buttercup or Westley?
 
-<img src="https://github.com/user-attachments/assets/9c18b706-c9e9-4cc9-b13e-0bdace6c1ce1" width="200"> <img src="https://github.com/user-attachments/assets/952f0a2b-b354-4155-9caf-25d3898b9c8b" width="200">
+<img src="https://github.com/user-attachments/assets/9c18b706-c9e9-4cc9-b13e-0bdace6c1ce1" height="190"> <img src="https://github.com/user-attachments/assets/952f0a2b-b354-4155-9caf-25d3898b9c8b" height="190">
 
 
 Or perhaps it is one of the bandits (top to bottom) Fezzik, Inigo or Vizzini?
 
-<img src="https://github.com/user-attachments/assets/da3fcfe7-2a8f-4941-b1fc-8e097b0742d7" width="200"> 
+<img src="https://github.com/user-attachments/assets/da3fcfe7-2a8f-4941-b1fc-8e097b0742d7" height="190"> 
 
 These are the five classes we consider. 
 
