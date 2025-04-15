@@ -56,9 +56,11 @@ For each image, I applied a wavelet transform to extract texture features. These
 
 ## Model Selection 
 
-We compared the models using cross-validation, selecting the best performer based on the F-score. Evaluation included the use of confusion matrices for visual inspection of results.
+We compared the models using cross-validation, selecting the best performer based on the F-score.
 
 ## Model evaluation
+
+Evaluation included the use of confusion matrices for visual inspection of results, as well as studying the precision, recall and F-score.
 
 ## Future Work
 
