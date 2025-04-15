@@ -12,47 +12,53 @@ Or perhaps it is one of the bandits (top to bottom) Fezzik, Inigo or Vizzini?
 
 These are the five classes we consider. 
 
-The outline of the project is roughly as follows: 
-1. web-scraping for photos of the five actors using the Fatkun Batch Download chrome extension
-2. face detection with OpenCV and Haar cascade classifiers
-3. feature extraction: stacking original images alongside their wavelet transforms, reshaping and normalizing the feature vectors
-4. performing three different classification algorithms, namely SVM, logistic regression and random forest
-5. choosing the best algorithm and parameters using cross-validation
+
+## Project Overview
+
+A brief outline of the project is: 
+1. data colllection
+2. extracting relevant areas from the images and removing unrelevant images
+3. feature engineering
+4. performing three different classification algorithms
+5. choosing the model
+6. model evaluation
 
 
 In the future I hope to build a UI such that a user can drop an image and receive the predicted label.
 
+Here are some more details regarding each step of the project. For even more details, see the Jupyter notebook. 
 
-# Image Classification of Five Iconic Actors
+## Data Collection
 
-This project focuses on the task of classifying images into one of five distinct classes, each corresponding to a well-known actor. The goal is to build a machine learning pipeline that can accurately predict the identity of an actor based on a facial image.
+Images were scraped from the web using the Fatkun Batch Download Chrome extension. This allowed efficient downloading of multiple photos per actor from Google Images, but the result is a large number of photos, not all of which are usable (think photos of multiple people, blurry photos etc.)
 
-## Project Overview
 
-The project is structured into several phases:
+## Face Detection
+I utilized OpenCV's pre-trained Haar cascade classifiers to detect faces in the raw images. Some images contain multiple faces, all of which are recognized by the Haar cascade classifiers. Thus, I manually remove the irrelevant images from the datasets. This includes pictures with faces of other people and pictures where faces are not clearly visible. This step ensures that only the relevant regions (faces) are used for training, improving model focus and performance.
 
-1. **Data Collection**  
-   Images were scraped from the web using the Fatkun Batch Download Chrome extension. This allowed efficient downloading of multiple photos per actor from Google Images.
 
-2. **Face Detection**  
-   We utilized OpenCV's pre-trained Haar cascade classifiers to detect faces in the raw images. This step ensures that only the relevant regions (faces) are used for training, improving model focus and performance.
 
-3. **Discarding irrelevant images**
-  Some images contain multiple faces, all of which are recognized by the Haar cascade classifiers. Thus, we must remove the irrelevant images from the datasets. This includes pictures with faces of other people and pictures where faces are not clearly visible. This step was done manually.
 
-5. **Feature Engineering**  
-   For each image, we applied a wavelet transform to extract texture features. These wavelet-transformed images were then stacked alongside the original images. The resulting feature vectors were flattened and normalized, creating a consistent numerical format for the models.
+## Feature Engineering
 
-6. **Model Training**
+For each image, I applied a wavelet transform to extract texture features. These wavelet-transformed images were then combined with the original images using vertical stacking. The resulting feature vectors were flattened and normalized, creating a consistent numerical format for the models. 
+
+
+## Model Training
+
    Three different classification algorithms were evaluated:  
-   - Support Vector Machine (SVM)  
+   
+   - Support Vector Machine (SVM) : 
    - Logistic Regression  
    - Random Forest  
 
-   Each model was wrapped in a pipeline with data scaling, and their hyperparameters were fine-tuned using `GridSearchCV`.
+   Each model was wrapped in a pipeline with data scaling, and their hyperparameters were fine-tuned using `GridSearchCV`. 
 
-7. **Model Selection**  
-   We compared the models using cross-validation, selecting the best performer based on accuracy and generalization. Evaluation included the use of confusion matrices for visual inspection of results.
+## Model Selection 
+
+We compared the models using cross-validation, selecting the best performer based on the F-score. Evaluation included the use of confusion matrices for visual inspection of results.
+
+## Model evaluation
 
 ## Future Work
 
