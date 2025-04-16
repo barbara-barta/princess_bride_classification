@@ -30,13 +30,11 @@ Here are some more details regarding each step of the project. For even more det
 
 ## Data Collection
 
-Images were scraped from the web using the Fatkun Batch Download Chrome extension. This allowed efficient downloading of multiple photos per actor from Google Images, but the result is a large number of photos, not all of which are usable (think photos of multiple people, blurry photos etc.)
+Images were scraped from the web using the Fatkun Batch Download Chrome extension. This allowed efficient downloading of multiple photos per actor from Google Images, but the result is a large number of photos, not all of which are usable (think photos of multiple people, blurry photos etc.) We will later crop out regions containing faces of each actor. Thus, we create directories where we will store raw and cropped data. 
 
 
 ## Face Detection
 I utilized OpenCV's pre-trained Haar cascade classifiers to detect faces in the raw images. Some images contain multiple faces, all of which are recognized by the Haar cascade classifiers. Thus, I manually remove the irrelevant images from the datasets. This includes pictures with faces of other people and pictures where faces are not clearly visible. This step ensures that only the relevant regions (faces) are used for training, improving model focus and performance.
-
-
 
 
 ## Feature Engineering
@@ -48,19 +46,37 @@ For each image, I applied a wavelet transform to extract texture features. These
 
    Three different classification algorithms were evaluated:  
    
-   - Support Vector Machine (SVM) : 
-   - Logistic Regression  
-   - Random Forest  
+   - Support Vector Machine (SVM) with parameter C in [1,5,10]
+   - Logistic Regression with parameter C in [1,10,100] and the kernel either rbf or linear
+   - Random Forest with 50, 100 and 500 trees
 
    Each model was wrapped in a pipeline with data scaling, and their hyperparameters were fine-tuned using `GridSearchCV`. 
 
+   
 ## Model Selection 
 
-We compared the models using cross-validation, selecting the best performer based on the F-score.
+We compared the models using 5-fold cross-validation, selecting the best performer based on the F-score in training. The results can be seen below:
+
+<div align="center">
+<img src = "https://github.com/user-attachments/assets/ab522507-1395-424a-a790-76dd9b5dd885" width = "700">
+</div>
+
+
+We choose logistic regression with C=1 as the final estimator, as it performs nearly as well as SVM in training, and better in testing. 
+
 
 ## Model evaluation
 
-Evaluation included the use of confusion matrices for visual inspection of results, as well as studying the precision, recall and F-score.
+For model evaluation, we plot the confusion matrix, which can be seen below. 
+
+
+<div align="center">
+  <img src = "https://github.com/user-attachments/assets/293a2912-dc31-47de-8712-ab49986a9035" width = "500">
+</div>
+
+Based on the plot, we expect recall to be comparatively low in the classes of Robin Wright (Cary Elwes), meaning that of all faces classified as Robin Wright (Cary Elwes), a smaller number of them are actually true. We expect precision is lowest in the class of Wallace Shawn, as there are quite a few non-diagonal entries in his column of the confusion matrix, which means that out of all the samples predicted to be Wallace Shawn, a coparatively smaller number of them is actually him, i.e. a small number of retrieved elements are relevant.
+
+Given that there were only 14 instances of his photos in the test set, this is not too surpising: it could be due to random fluctuation given the small sample size, and not a true representation of the algorithm's performance. A similar effect is observed for Mandy Patinking, whose figures are also not abundant in the test set.
 
 ## Future Work
 
